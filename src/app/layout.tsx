@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import { getCurrentSession } from "@/actions/auth";
+import { SanityLive } from "@/sanity/lib/live";
+import HeaderCategorySelector from "@/components/layout/HeaderCategorySelector";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +23,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <Header user={user} />
+        <Header user={user} categorySelector={<HeaderCategorySelector />} />
         {children}
+
+        <SanityLive />
       </body>
     </html>
   );
