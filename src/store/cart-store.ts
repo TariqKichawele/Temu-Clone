@@ -1,3 +1,5 @@
+'use client';
+
 import { getOrCreateCart, syncCartWithUser, updateCartItem } from "@/actions/cart-actions";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
