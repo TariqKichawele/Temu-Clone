@@ -6,6 +6,8 @@ import HeaderSearchBar from './HeaderSearchBar';
 import { useRouter } from 'next/navigation';
 import { logoutUser } from '@/actions/auth';
 import { User } from '@prisma/client';
+import { useCartStore } from '@/store/cart-store';
+import { useShallow } from 'zustand/shallow';
 
 const AnnouncementBar = () => {
     return (
@@ -25,6 +27,13 @@ type HeaderProps = {
 const Header = ({ user, categorySelector }: HeaderProps) => {
     const [isOpen, setIsOpen] = useState(true);
     const router = useRouter();
+
+    const { open, getTotalItems } = useCartStore(
+        useShallow((state) => ({
+            open: state.open,
+            getTotalItems: state.getTotalItems
+        }))
+    )
 
   return (
     <header className='w-full sticky top-0 z-50'>
@@ -84,7 +93,7 @@ const Header = ({ user, categorySelector }: HeaderProps) => {
                                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z' />
                             </svg>
                             <span className='absolute -top-1 -right-1 bg-black text-white text-[10px] sm:text-xs w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center'>
-                                5
+                                {getTotalItems()}
                             </span>
                         </button>
                     </div>
